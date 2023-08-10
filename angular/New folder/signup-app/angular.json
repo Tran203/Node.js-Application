@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "student-info-app": {
+    "signup-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/student-info-app",
+            "outputPath": "dist/signup-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "student-info-app:build:production"
+              "browserTarget": "signup-app:build:production"
             },
             "development": {
-              "browserTarget": "student-info-app:build:development"
+              "browserTarget": "signup-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "student-info-app:build"
+            "browserTarget": "signup-app:build"
           }
         },
         "test": {
@@ -96,6 +96,6 @@
     }
   },
   "cli": {
-    "analytics": "124c5824-694b-4a5c-9605-1965defcafa1"
+    "analytics": "85cf6dc2-7f98-4cb4-a997-aab3bc0d7b4e"
   }
 }
