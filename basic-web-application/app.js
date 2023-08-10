@@ -1,4 +1,7 @@
-var {Client} = require('pg');//import postgree
+var { Client } = require('pg');//import postgree
+var express = require('express');//import express
+var app = express();//initialise
+var serverPort = 3000;
 
 //databse connection details
 var client = new Client({
@@ -11,24 +14,35 @@ var client = new Client({
 });
 
 //connect
-client.connect(function(err){
-    if(err){
+client.connect(function (err) {
+    if (err) {
         //if error
         throw err;
-    }else{
-        //connect
+    } else {
+        //connected
         console.log('Connected');
 
-        //sql
-        var sql = "SELECT * FROM STUDENTS";
+        //route management
+        app.get('/', (req, res) => {
+            //sql
+            var sql = "SELECT * FROM STUDENTS";
 
-        //run select query
-        client.query(sql,function(err,result,fields){
-            if(err){
-                throw err;
-            }else{
-                console.log(result);
-            }
+            //run select query
+            client.query(sql, function (err, result, fields) {
+                if (err) {
+                    throw err;
+                } else {
+                    //return
+                    res.json(result.rows);
+                }
+            });
+
+        });
+
+
+        //server runs
+        app.listen(serverPort, () =>{
+            console.log(`Server is running on port ${serverPort}`);
         });
     }
 });
