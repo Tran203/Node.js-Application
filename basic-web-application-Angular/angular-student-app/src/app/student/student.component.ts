@@ -19,6 +19,7 @@ export class StudentComponent implements OnInit {
     this.studentService.getStudents().subscribe(
       (data) => {
         this.students = data;
+        console.log('Fetched students:', this.students); // Log the fetched data
       },
       (error) => {
         console.error('Error fetching students:', error);
@@ -26,4 +27,3 @@ export class StudentComponent implements OnInit {
     );
   }
 }
-
