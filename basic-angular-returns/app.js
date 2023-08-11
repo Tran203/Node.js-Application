@@ -1,23 +1,53 @@
-const express = require('express');//import express
+const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import the 'cors' middleware
+const cors = require('cors');
+const { Client } = require('pg'); // Import the PostgreSQL Client
 
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
+// Database connection details
+const dbConfig = {
+  user: 'postgres',
+  host: 'localhost',
+  database: 'test',
+  password: '123',
+  port: 5432,
+};
 
-app.post('/api/submit', (req, res) => {
-  const receivedData = req.body;
+app.use(bodyParser.json());
+app.use(cors());
+
+app.post('/api/submit', async (req, res) => {
+  const receivedData = req.body;//get data
   console.log('Received data:', receivedData);
 
-  // Handle the data on the server as needed
-  console.log('Name:', receivedData.name);
-  console.log('Surname:', receivedData.surname);
+  
+  const dbClient = new Client(dbConfig); // Create a new client for this request
 
-  // Send a response back to the client
-  res.status(200).json({ message: 'Data received on the server', data: receivedData });
+  try {
+    // Connect to the database
+    await dbClient.connect();
+    console.log('Connected to database');
+
+    // SQL query to insert data
+    const sql = 'INSERT INTO Students (name, surname) VALUES ($1, $2)';
+    const values = [receivedData.name, receivedData.surname];
+
+    // Execute the query
+    await dbClient.query(sql, values);
+    console.log('Data inserted into database');
+
+    // Send a response back to the client
+    res.status(200).json({ message: 'Data received and inserted into the database' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Error inserting data into the database' });
+  } finally {
+    // Disconnect from the database
+    await dbClient.end();
+    console.log('Disconnected from database');
+  }
 });
 
 app.listen(port, () => {
