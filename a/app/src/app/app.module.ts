@@ -4,15 +4,18 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 import { AppComponent } from './app.component';
+import { SuccessComponent } from './success/success.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SuccessComponent
   ],
   imports: [
     BrowserModule,
     FormsModule, // Add FormsModule
-    HttpClientModule, // Add HttpClientModule
+    HttpClientModule, AppRoutingModule, // Add HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
