@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   name = '';
@@ -15,6 +16,10 @@ export class AppComponent {
     const formData = { name: this.name, surname: this.surname };
     this.http.post('/api/submit', formData).subscribe((response) => {
       console.log('Data sent to server:', response);
+      // Clear the form fields after successful submission
+      this.name = '';
+      this.surname = '';
     });
   }
 }
+
